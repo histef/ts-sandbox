@@ -4,7 +4,9 @@ import GithubApi from './GithubAPI';
 
 //create a instance of the GithubAPI
 const callGithub = new GithubApi();
-let username = process.argv[2];
+const username = process.argv[2];
+
+process.argv.length < 3 ? console.log("Please enter a username") :
 callGithub.getUserInfo(username, (user) => {
   callGithub.getRepos(username, (repo) => {
     let top5Repos = _.take(repo, 5)
