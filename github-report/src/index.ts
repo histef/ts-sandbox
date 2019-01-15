@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
 import GithubApi from './GithubAPI';
 
-
 //create a instance of the GithubAPI
 const callGithub = new GithubApi();
 const username = process.argv[2];

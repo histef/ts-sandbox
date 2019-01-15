@@ -1,7 +1,7 @@
 # Github Report
 
 ## Overview
-Simple project using Github API, Typescript, and Node from Java Brains "TypeScript Basics" youtube series.
+Simple project using Github API, Typescript, and Node, Request (for http request) from Java Brains "TypeScript Basics" youtube series.
 
 ## Set up
 To get Node and Typescript set up, I followed this articles directions: https://basarat.gitbooks.io/typescript/docs/quick/nodejs.html
