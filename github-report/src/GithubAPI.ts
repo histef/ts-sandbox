@@ -10,7 +10,7 @@ export default class GithubApi {
     json: true
   }
   url: string = 'https://api.github.com/users/';
-
+  //request takes callbacks not promises/async/await. hopefully, no cb hell!!!
   //takes 2 parameters username and a callback (cb). the callback takes 1 param user(with type User) and returns type any
   getUserInfo(username: string, cb: (user: User) => any ) {
     request.get(`${this.url}${username}`, this.options, (error:any, response: any, body:any)=>{
