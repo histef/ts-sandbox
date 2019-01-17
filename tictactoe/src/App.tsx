@@ -9,6 +9,7 @@ const enum Player { None, One, Two }
 interface IState {
   board: Player[];
   nextPlayerTurn: Player;
+  gameIsGoing: boolean;
 }
 
 // first type is for props(since we don't receive any, this is an empty object), second is for state
@@ -25,6 +26,7 @@ class App extends React.Component<{}, IState> {
       Player.None,
       Player.None,
     ],
+    gameIsGoing: false,
     nextPlayerTurn: Player.One
   }
 
@@ -44,6 +46,7 @@ class App extends React.Component<{}, IState> {
 
     this.setState({
       board: newBoard,
+      gameIsGoing: true,
       nextPlayerTurn: 3 - nextPlayerTurn
     })
   }
@@ -71,11 +74,16 @@ class App extends React.Component<{}, IState> {
     </div>
   }
 
+  public renderStatus = () => {
+      return <div>Game is going</div>
+  }
+
   public render() {
     return (
       <div className="App">
         <h1>Tic Tac Toe</h1>
         {this.renderBoard()}
+        {this.state.gameIsGoing ? this.renderStatus() : ''}
       </div>
     );
   }
