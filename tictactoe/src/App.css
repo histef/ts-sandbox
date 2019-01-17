@@ -24,9 +24,20 @@
  }
 
 .cell[data-player="1"]{
-  background-color: blueviolet;
+  background-color: #ddd;
+}
+
+.cell[data-player="1"]::after {
+  content: "X";
+  font-size: 2em;
+  text-align: center;
 }
 
 .cell[data-player="2"]{
-  background-color: blue;
+  background-color: #ddd;
+}
+
+.cell[data-player="2"]::after {
+  content: "O";
+  font-size: 2em;
 }
