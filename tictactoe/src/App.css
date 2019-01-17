@@ -15,4 +15,18 @@
   height: 50px;
   border: black solid 1px;
   box-sizing: border-box;
+
+}
+
+.cell:hover {
+    background-color: #ddd;
+    cursor: -webkit-grab;
+ }
+
+.cell[data-player="1"]{
+  background-color: blueviolet;
+}
+
+.cell[data-player="2"]{
+  background-color: blue;
 }
