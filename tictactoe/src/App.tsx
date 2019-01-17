@@ -9,7 +9,7 @@ const enum Player { None, One, Two }
 interface IState {
   board: Player[];
   nextPlayerTurn: Player;
-  gameIsGoing: boolean;
+  gameIsGoing: boolean | undefined;
 }
 
 // first type is for props(since we don't receive any, this is an empty object), second is for state
@@ -26,7 +26,7 @@ class App extends React.Component<{}, IState> {
       Player.None,
       Player.None,
     ],
-    gameIsGoing: false,
+    gameIsGoing: undefined,
     nextPlayerTurn: Player.One
   }
 
