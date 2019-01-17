@@ -34,6 +34,10 @@ class App extends React.Component<{}, IState> {
   public createOnClickHandler = (index: number) => () => {
     const { board, nextPlayerTurn } = this.state;
 
+    // check so that once a player has claimed a cell, the other player can't take it
+    if (board[index] !== Player.None){
+      return
+    }
     // create new board for immutability of og board
     const newBoard = board.slice();
     newBoard[index] = nextPlayerTurn;
