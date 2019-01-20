@@ -14,7 +14,6 @@ interface IState {
   board: Player[];
   nextPlayerTurn: Player;
   gameIsWon: Player | ONGOING_GAME;
-  winner: Player | undefined;
 }
 
 // first type is for props(since we don't receive any, this is an empty object), second is for state
@@ -46,22 +45,41 @@ class App extends React.Component<{}, IState> {
     if (board[index] !== Player.None){
       return
     }
-    // create new board for immutability of og board
+    // create new board that assigns a value of player(0,1, or 2) to each cell
     const newBoard = board.slice();
     newBoard[index] = nextPlayerTurn;
 
+    const gameIsWon = this.checkIfGameIsOver(newBoard);
+
     this.setState({
       board: newBoard,
+      gameIsWon,
       nextPlayerTurn: 3 - nextPlayerTurn
     })
   }
 
-  // public checkIfWinner = ( board: Player[], nextPlayerTurn: Player ) => {
-  //   // after each click check to see if there's a match win pattern 0-2, 3-5, 6-8, 0-3-6, 1-4-7, 2-5-8, 0-4-8, 2-4-6
-  //   if(this.state.gameIsGoing){
-  //     return <div>{nextPlayerTurn} wins</div>
-  //   }
-  // }
+  public checkIfGameIsOver = (board: Player[]) => {
+    // after each click check to see if there's a match win pattern 0-2, 3-5, 6-8, 0-3-6, 1-4-7, 2-5-8, 0-4-8, 2-4-6
+    if(board[0] === board[1] && board[1] === board[2] && board[2] !== Player.None){
+      return board[0];
+    } else if(board[3] === board[4] && board[4] === board[5] && board[5] !== Player.None){
+      return board[3];
+    } else if(board[6] === board[7] && board[7] === board[8] && board[8] !== Player.None){
+      return board[6];
+    } else if(board[0] === board[3] && board[3] === board[6] && board[6] !== Player.None){
+      return board[0];
+    } else if(board[1] === board[4] && board[4] === board[7] && board[7] !== Player.None){
+      return board[1];
+    } else if(board[2] === board[5] && board[5] === board[8] && board[8] !== Player.None){
+      return board[2];
+    } else if(board[0] === board[4] && board[4] === board[8] && board[8] !== Player.None){
+      return board[0];
+    } else if(board[2] === board[4] && board[4] === board[6] && board[6] !== Player.None){
+      return board[2];
+    }
+    // we're returning -1 if there isn't a winner cuz ONGOING_GAME is -1
+    return -1;
+  }
   
   // in order to prevent createOnClickHandler from executing right away, need to create anon fn (arrow function = lambdas) so that when it's clicked, then fn executes.
   // BUT arrow fn(lambda) 'forbidden in jsx attributes'...so need to move it to createOnClickHandler function by returning an anon function
@@ -87,16 +105,22 @@ class App extends React.Component<{}, IState> {
     </div>
   }
 
-  public renderStatus = () => {
-      return <div style={{marginTop: '50px'}}>Game is going</div>
+  public renderStatus = (winner: Player) => {
+    const { gameIsWon } = this.state;
+
+    if(gameIsWon !== -1){
+      return <div>Player {winner} is the winner!</div>
+    }
+    return <div style={{marginTop: '50px'}}>Game is going</div>
   }
 
   public render() {
+    const { gameIsWon } = this.state;
     return (
       <div className="App">
         <h1>Tic Tac Toe</h1>
         {this.renderBoard()}
-        {this.renderStatus()}
+        {this.renderStatus(gameIsWon)}
       </div>
     );
   }
