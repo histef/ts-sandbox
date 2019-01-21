@@ -39,21 +39,21 @@ class App extends React.Component<{}, IState> {
   // index will tell which cell to update
   // not allowed to do anon fn in tslint so need to 
   public createOnClickHandler = (index: number) => () => {
-    const { board, nextPlayerTurn } = this.state;
+    const { board, nextPlayerTurn, gameIsWon } = this.state;
 
-    // check so that once a player has claimed a cell, the other player can't take it
-    if (board[index] !== Player.None){
+    // check so that once a player has claimed a cell or won, the other player can't take cell or keep claiming cells
+    if (gameIsWon !== ONGOING_GAME || board[index] !== Player.None){
       return
     }
     // create new board that assigns a value of player(0,1, or 2) to each cell
     const newBoard = board.slice();
     newBoard[index] = nextPlayerTurn;
 
-    const gameIsWon = this.checkIfGameIsOver(newBoard);
+    const newGameIsWon = this.checkIfGameIsOver(newBoard);
 
     this.setState({
       board: newBoard,
-      gameIsWon,
+      gameIsWon: newGameIsWon,
       nextPlayerTurn: 3 - nextPlayerTurn
     })
   }
