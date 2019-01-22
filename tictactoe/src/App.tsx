@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 
 
-type ONGOING_GAME = -1;
+type ONGOING_GAME = -1 | 1;
 const ONGOING_GAME = -1;
 
 // enum to represent each player or no player.
@@ -77,8 +77,14 @@ class App extends React.Component<{}, IState> {
     } else if(board[2] === board[4] && board[4] === board[6] && board[6] !== Player.None){
       return board[2];
     }
+
+    for (const player of board) {
+      if (player === Player.None){
+        return ONGOING_GAME
+      }
+    }
     // we're returning -1 if there isn't a winner cuz ONGOING_GAME is -1
-    return -1;
+    return Player.None;
   }
   
   // in order to prevent createOnClickHandler from executing right away, need to create anon fn (arrow function = lambdas) so that when it's clicked, then fn executes.
@@ -108,10 +114,10 @@ class App extends React.Component<{}, IState> {
   public renderStatus = (winner: Player) => {
     const { gameIsWon } = this.state;
 
-    if(gameIsWon !== -1){
-      return <div>Player {winner} is the winner!</div>
-    }
-    return <div style={{marginTop: '50px'}}>Game is going</div>
+    const winnerText = gameIsWon !== Player.None ? `Player ${gameIsWon} won!` : `Draw Game`;
+    return <div style={{marginTop: '50px'}}>
+      {gameIsWon === ONGOING_GAME ? 'Game is going': winnerText }
+      </div>
   }
 
   public render() {
