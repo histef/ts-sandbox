@@ -30,7 +30,6 @@
 .cell[data-player="1"]::after {
   content: "X";
   font-size: 2em;
-  text-align: center;
 }
 
 .cell[data-player="2"]{
